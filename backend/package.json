@@ -1,0 +1,37 @@
+{
+  "name": "cashtrackr_backend",
+  "version": "1.0.0",
+  "description": "SAAS para presupuestos y gastos",
+  "keywords": [
+    "REST",
+    "API",
+    "Express",
+    "Next"
+  ],
+  "license": "ISC",
+  "author": "Edmundo Dominguez Agurcia",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "dev": "tsx watch --tsconfig tsconfig.json src/index.ts",
+    "dev:api": "tsx watch src/index.ts --api",
+    "build": "tsc",
+    "start": "node dist/index.js"
+  },
+  "dependencies": {
+    "colors": "^1.4.0",
+    "dotenv": "^18.0.5",
+    "express": "^5.2.1",
+    "morgan": "^1.12.1",
+    "pg": "^8.23.1",
+    "pg-hstore": "^2.3.4",
+    "sequelize-typescript": "^2.1.6"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/morgan": "^1.9.10",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2"
+  }
+}
