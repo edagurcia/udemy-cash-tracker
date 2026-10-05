@@ -8,4 +8,8 @@ export default class Budget extends Model {
     type: DataType.STRING(100),
   })
   declare name: string;
+  @Column({
+    type: DataType.DECIMAL,
+  })
+  declare amount: number;
 }
