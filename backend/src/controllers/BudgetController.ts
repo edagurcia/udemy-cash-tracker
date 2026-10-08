@@ -9,6 +9,7 @@ export class BudgetController {
       order: [["createdAt", "DESC"]],
     });
 
+    // TODO: filtrar presupuestos por el usuario autenticado
     res.status(200).json(budgets);
   };
 
