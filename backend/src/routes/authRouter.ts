@@ -63,11 +63,31 @@ router.post(
   body("password")
     .notEmpty()
     .isLength({ min: 8 })
-    .withMessage("Contraseña no valida"),
+    .withMessage("Contraseña debe tener al menos 8 caracteres"),
   handleInputErrors,
   AuthController.resetPasswordWithToken,
 );
 
 router.get("/user", authenticated, AuthController.user);
+
+router.post(
+  "/update-password",
+  authenticated,
+  body("currentPassword").notEmpty().withMessage("Contraseña es obligatoria"),
+  body("newPassword")
+    .notEmpty()
+    .isLength({ min: 8 })
+    .withMessage("Contraseña debe ser al menos de 8 caracteres"),
+  handleInputErrors,
+  AuthController.updatePassword,
+);
+
+router.post(
+  "/check-password",
+  authenticated,
+  body("password").notEmpty().withMessage("Contraseña es obligatoria"),
+  handleInputErrors,
+  AuthController.checkPassword,
+);
 
 export default router;
