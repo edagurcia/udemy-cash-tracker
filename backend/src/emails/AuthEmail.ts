@@ -15,12 +15,12 @@ export class AuthEmail {
       html: `
         <p>Hola ${user.name} has creado tu cuenta en CashTracker, ya esta casi lista</p>
         <p>Visita el siguiente enlace:</p>
-        <a href="#">Confirmar cuenta</a>
+        <a href="${process.env.FRONTEND_URL}/auth/confirm-account">Confirmar cuenta</a>
         <p>Ingresa el código: <strong>${user.token}</strong></p>
       `,
     });
 
-    console.log(email); // función para enviar correo
+    //console.log(email);
   };
 
   static sendPasswordResetToken = async (user: EmailType) => {
@@ -31,11 +31,11 @@ export class AuthEmail {
       html: `
         <p>Hola ${user.name} has solicitado restablecer tu contraseña de CashTracker</p>
         <p>Visita el siguiente enlace:</p>
-        <a href="#">Restablecer contraseña</a>
+        <a href="${process.env.FRONTEND_URL}/auth/new-password">Restablecer contraseña</a>
         <p>Ingresa el código: <strong>${user.token}</strong></p>
       `,
     });
 
-    console.log(email); // función para enviar correo
+    //console.log(email);
   };
 }

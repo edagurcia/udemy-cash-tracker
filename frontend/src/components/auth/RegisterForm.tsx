@@ -1,8 +1,32 @@
 "use client";
 
+import { useActionState, useEffect, useRef } from "react";
+import { register } from "@/actions/create-account";
+import { ErrorMessage } from "@/components/ui/ErrorMessage";
+import { SuccessMessage } from "@/components/ui/SuccessMessage";
+
 export const RegisterForm = () => {
+  const ref = useRef<HTMLFormElement>(null);
+
+  const [state, formAction, isPending] = useActionState(register, {
+    errors: [],
+    success: "",
+  });
+
+  useEffect(() => {
+    if (state.success) {
+      ref.current?.reset();
+    }
+  }, [state]);
+
   return (
-    <form className="mt-14 space-y-5" noValidate>
+    <form ref={ref} className="mt-14 space-y-5" noValidate action={formAction}>
+      {state.errors.map((error) => (
+        <ErrorMessage>{error}</ErrorMessage>
+      ))}
+
+      {state.success && <SuccessMessage>{state.success}</SuccessMessage>}
+
       <div className="flex flex-col gap-2">
         <label className="font-bold text-2xl" htmlFor="email">
           Email
@@ -52,6 +76,7 @@ export const RegisterForm = () => {
       <input
         type="submit"
         value="Registrarme"
+        disabled={isPending}
         className="bg-purple-950 hover:bg-purple-800 w-full p-3 rounded-lg text-white font-black text-xl cursor-pointer block"
       />
     </form>
