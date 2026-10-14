@@ -8,7 +8,7 @@ import { SuccessMessage } from "@/components/ui/SuccessMessage";
 export const RegisterForm = () => {
   const ref = useRef<HTMLFormElement>(null);
 
-  const [state, formAction, isPending] = useActionState(register, {
+  const [state, dispatch, isPending] = useActionState(register, {
     errors: [],
     success: "",
   });
@@ -20,9 +20,9 @@ export const RegisterForm = () => {
   }, [state]);
 
   return (
-    <form ref={ref} className="mt-14 space-y-5" noValidate action={formAction}>
-      {state.errors.map((error) => (
-        <ErrorMessage>{error}</ErrorMessage>
+    <form ref={ref} className="mt-14 space-y-5" noValidate action={dispatch}>
+      {state.errors.map((error, index) => (
+        <ErrorMessage key={index}>{error}</ErrorMessage>
       ))}
 
       {state.success && <SuccessMessage>{state.success}</SuccessMessage>}

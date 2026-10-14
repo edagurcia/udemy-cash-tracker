@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { ConfirmAccountForm } from "@/components/auth/ConfirmAccountForm";
 
 export const metadata: Metadata = {
   title: "CashTrackr | Confirmar cuenta",
@@ -12,8 +13,11 @@ export default function ConfirmAccountPage() {
         Confirma tu cuenta
       </h1>
       <p className="font-bold text-3xl">
-        y controla tus <span className="text-amber-500">finanzas</span>
+        Ingrese el código que recibió{" "}
+        <span className="text-amber-500">por correo</span>
       </p>
+
+      <ConfirmAccountForm />
     </>
   );
 }
