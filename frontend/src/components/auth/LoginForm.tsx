@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useEffect, useRef } from "react";
+import { useActionState, useEffect } from "react";
 import { toast } from "react-toastify";
 import { authenticate } from "@/actions/login";
 

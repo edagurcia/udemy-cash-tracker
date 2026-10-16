@@ -35,3 +35,18 @@ export const TokenSchema = z
   .string({ message: "Token no valido" })
   .min(6, { message: "Token no valido" })
   .max(6, { message: "Token no valido" });
+
+export const UserSchema = z.object({
+  id: z.number(),
+  name: z.string(),
+  email: z.string().email(),
+});
+
+export type UserType = z.infer<typeof UserSchema>;
+
+export const ForgotPasswordSchema = z.object({
+  email: z
+    .string()
+    .min(1, { message: "El Email es Obligatorio" })
+    .email({ message: "Email no válido" }),
+});

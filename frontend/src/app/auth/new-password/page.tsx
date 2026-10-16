@@ -1,3 +1,4 @@
+import { ResetPasswordForm } from "@/components/auth/ResetPasswordForm";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -9,11 +10,14 @@ export default function NewPasswordPage() {
   return (
     <>
       <h1 className="font-black text-6xl text-purple-950">
-        Restablece tu contraseña
+        Restablecer Password
       </h1>
-      <p className="font-bold text-3xl">
-        y controla tus <span className="text-amber-500">finanzas</span>
+      <p className="text-3xl font-bold">
+        Ingresa el código que recibiste
+        <span className="text-amber-500"> por email</span>
       </p>
+
+      <ResetPasswordForm />
     </>
   );
 }
