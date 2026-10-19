@@ -1,8 +1,44 @@
 "use client";
 
-export const ResetPasswordForm = () => {
+import { useState, useActionState, startTransition, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
+import { ActionStateType, resetPasswordAction } from "@/actions/reset-password";
+
+type Props = {
+  token: string;
+};
+
+export const ResetPasswordForm = ({ token }: Props) => {
+  const router = useRouter();
+
+  const resetPasswordWithToken = resetPasswordAction.bind(null, token);
+
+  const [state, dispatch] = useActionState(resetPasswordWithToken, {
+    errors: [],
+    success: "",
+  });
+
+  useEffect(() => {
+    if (state.errors) {
+      state.errors.forEach((error) => {
+        toast.error(error);
+      });
+    }
+    if (state.success) {
+      toast.success(state.success, {
+        onClose: () => {
+          router.push("/auth/login");
+        },
+        onClick: () => {
+          router.push("/auth/login");
+        },
+      });
+    }
+  }, [state, router]);
+
   return (
-    <form className=" mt-14 space-y-5" noValidate>
+    <form action={dispatch} className=" mt-14 space-y-5" noValidate>
       <div className="flex flex-col gap-5">
         <label className="font-bold text-2xl">Password</label>
 

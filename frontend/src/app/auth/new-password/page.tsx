@@ -1,3 +1,4 @@
+import { PasswordResetHandler } from "@/components/auth/PasswordResetHandler";
 import { ResetPasswordForm } from "@/components/auth/ResetPasswordForm";
 import type { Metadata } from "next";
 
@@ -13,11 +14,11 @@ export default function NewPasswordPage() {
         Restablecer Password
       </h1>
       <p className="text-3xl font-bold">
-        Ingresa el código que recibiste
-        <span className="text-amber-500"> por email</span>
+        Siga las instrucciones para
+        <span className="text-amber-500"> restablecer su contraseña</span>
       </p>
 
-      <ResetPasswordForm />
+      <PasswordResetHandler />
     </>
   );
 }
