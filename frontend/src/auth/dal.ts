@@ -2,12 +2,12 @@
 
 import "server-only"; // dependencia de terceros, este código se queda en el lado del servidor y no se pasa al cliente
 import { cache } from "react";
-import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import { getToken } from "./token";
 import { UserSchema } from "@/schemas";
 
 export const getAuthenticatedUser = cache(async () => {
-  const jwt = (await cookies()).get("CASHTRACKR_TOKEN")?.value;
+  const jwt = await getToken();
 
   if (!jwt) {
     redirect("/auth/login");

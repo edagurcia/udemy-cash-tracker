@@ -18,9 +18,9 @@ export class BudgetController {
     try {
       const budget = new Budget(req.body);
       budget.userId = req.user.id;
-      await budget.save();
+      const savedBudget = await budget.save();
 
-      res.status(201).json("Presupuesto creado");
+      res.status(201).json(savedBudget);
     } catch (error) {
       //console.log(error)
       res
