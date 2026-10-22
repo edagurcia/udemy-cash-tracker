@@ -39,7 +39,7 @@ export const BudgetMenu = ({ budgetId }: { budgetId: BudgetType["id"] }) => {
             </MenuItem>
             <MenuItem>
               <Link
-                href={``}
+                href={`/admin/budgets/${budgetId}/edit`}
                 className="block px-3 py-1 text-sm leading-6 text-gray-900"
               >
                 Editar Presupuesto
