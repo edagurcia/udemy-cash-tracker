@@ -1,6 +1,5 @@
 import type { ReactNode } from "react";
 import Image from "next/image";
-import { ToastContainer } from "react-toastify";
 import { Logo } from "@/components/ui/Logo";
 
 export default function AuthLayout({ children }: { children: ReactNode }) {
@@ -27,19 +26,6 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
           <div className="max-w-3xl w-full mx-auto">{children}</div>
         </div>
       </div>
-
-      <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick={false}
-        rtl={false}
-        pauseOnFocusLoss
-        draggable={false}
-        pauseOnHover
-        theme="light"
-      />
     </>
   );
 }

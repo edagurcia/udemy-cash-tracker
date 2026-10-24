@@ -1,30 +1,20 @@
 import Link from "next/link";
-import { notFound } from "next/navigation";
-import { getToken } from "@/auth/token";
-import { BudgetAPIResponseSchema } from "@/schemas";
+import type { Metadata } from "next";
+import { EditBudget } from "@/components/admin/budgets/EditBudget";
+import { getBudget } from "@/services/budget";
 
-const getBudget = async (budgetId: string) => {
-  const jwt = await getToken();
-  const url = `${process.env.API_URL}/budgets/${budgetId}`;
-
-  const req = await fetch(url, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${jwt}`,
-    },
-  });
-
-  const json = await req.json();
-
-  if (!req.ok) {
-    notFound();
-  }
-
-  const budget = BudgetAPIResponseSchema.parse(json);
-
-  return budget;
+type Props = {
+  params: Promise<{ id: string }>;
 };
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { id } = await params;
+  const budget = await getBudget(id);
+
+  return {
+    title: `CashTrackr | ${budget.name}`,
+  };
+}
 
 export default async function EditPage({
   params,
@@ -43,7 +33,7 @@ export default async function EditPage({
             Editar Presupuesto: {budget.name}
           </h1>
           <p className="text-xl font-bold">
-            Llena el formulario y crea un nuevo {""}
+            Actualiza la información de tu {""}
             <span className="text-amber-500">presupuesto</span>
           </p>
         </div>
@@ -54,7 +44,9 @@ export default async function EditPage({
           Volver
         </Link>
       </div>
-      <div className="p-10 mt-10  shadow-lg border "></div>
+      <div className="p-10 mt-10  shadow-lg border ">
+        <EditBudget budget={budget} />
+      </div>
     </>
   );
 }

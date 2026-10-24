@@ -2,6 +2,7 @@
 
 import { ErrorResponseSchema, DraftBudgetSchema } from "@/schemas";
 import { getToken } from "@/auth/token";
+import { revalidatePath } from "next/cache";
 
 type ActionStateType = {
   errors: string[];
@@ -9,7 +10,7 @@ type ActionStateType = {
 };
 
 export async function createBudget(
-  prevState: ActionStateType,
+  prevState: ActionStateType, //? siempre el prevState debe ir antes del formData
   formData: FormData,
 ) {
   const jwt = await getToken();
@@ -52,6 +53,8 @@ export async function createBudget(
       success: "",
     };
   }
+
+  revalidatePath("/admin");
 
   return {
     errors: [],

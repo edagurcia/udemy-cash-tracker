@@ -75,6 +75,10 @@ export const BudgetAPIResponseSchema = z.object({
 
 export const BudgetsAPIResponseSchema = z.array(BudgetAPIResponseSchema);
 
+export const PasswordValidationSchema = z
+  .string()
+  .min(1, { message: "Contraseña es obligatoria" });
+
 export const SuccessSchema = z.string().min(1, { message: "Valor no valido" });
 
 export const ErrorResponseSchema = z.object({

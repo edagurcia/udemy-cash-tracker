@@ -40,7 +40,7 @@ router.post(
 router.get("/:budgetId", BudgetController.getById);
 
 router.put(
-  "budgetId",
+  "/:budgetId",
   validateBudgetInput,
   handleInputErrors,
   BudgetController.updateById,

@@ -1,4 +1,4 @@
-import { CreateBudgetForm } from "@/components/admin/budgets/CreateBudgetForm";
+import { CreateBudget } from "@/components/admin/budgets/CreateBudget";
 import Link from "next/link";
 
 export default function CreateBudgetPage() {
@@ -23,7 +23,7 @@ export default function CreateBudgetPage() {
       </div>
 
       <div className="p-10 mt-10  shadow-lg border ">
-        <CreateBudgetForm />
+        <CreateBudget />
       </div>
     </>
   );

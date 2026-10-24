@@ -2,7 +2,6 @@ import { getAuthenticatedUser } from "@/auth/dal";
 import { AdminMenu } from "@/components/admin/AdminMenu";
 import { Logo } from "@/components/ui/Logo";
 import Link from "next/link";
-import { ToastContainer } from "react-toastify";
 
 export default async function AdminLayout({
   children,
@@ -32,19 +31,6 @@ export default async function AdminLayout({
           Todos los Derechos Reservados {new Date().getFullYear()}
         </p>
       </footer>
-
-      <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick={false}
-        rtl={false}
-        pauseOnFocusLoss
-        draggable={false}
-        pauseOnHover
-        theme="light"
-      />
     </>
   );
 }
