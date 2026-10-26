@@ -30,8 +30,8 @@ export default function ModalContainer() {
 
   const getActiveKey = () => {
     if (searchParams.get("addExpense")) return "add";
-    if (searchParams.get("deleteExpense")) return "remove";
-    if (searchParams.get("editExpense")) return "edit";
+    if (searchParams.get("deleteExpenseId")) return "remove";
+    if (searchParams.get("editExpenseId")) return "edit";
     return null;
   };
 

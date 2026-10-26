@@ -64,6 +64,22 @@ export const DraftBudgetSchema = z.object({
     .min(1, { message: "Cantidad no válida" }),
 });
 
+export const DraftExpenseSchema = z.object({
+  name: z.string().min(1, { message: "El Nombre del gasto es obligatorio" }),
+  amount: z.coerce
+    .number({ message: "Cantidad no válida" })
+    .min(1, { message: "Cantidad no válida" }),
+});
+
+export const ExpenseAPIResponseSchema = z.object({
+  id: z.number(),
+  name: z.string(),
+  amount: z.string(),
+  budgetId: z.number(),
+  createdAt: z.string(),
+  updatedAt: z.string(),
+});
+
 export const BudgetAPIResponseSchema = z.object({
   id: z.number(),
   name: z.string(),
@@ -71,9 +87,16 @@ export const BudgetAPIResponseSchema = z.object({
   userId: z.number(),
   createdAt: z.string(),
   updatedAt: z.string(),
+  expenses: z.array(ExpenseAPIResponseSchema),
 });
 
-export const BudgetsAPIResponseSchema = z.array(BudgetAPIResponseSchema);
+// el omit se utiliza en este caso porque la api de budgets no trae el arreglo de expenses
+// expenses viene hasta que llamamos a un budget por su ID
+// el llamado al arreglo de budgets falla por eso, el omit lo corrige
+
+export const BudgetsAPIResponseSchema = z.array(
+  BudgetAPIResponseSchema.omit({ expenses: true }),
+);
 
 export const PasswordValidationSchema = z
   .string()
@@ -88,3 +111,7 @@ export const ErrorResponseSchema = z.object({
 export type UserType = z.infer<typeof UserSchema>;
 
 export type BudgetType = z.infer<typeof BudgetAPIResponseSchema>;
+
+export type ExpenseType = z.infer<typeof ExpenseAPIResponseSchema>;
+
+export type DraftExpenseType = z.infer<typeof DraftExpenseSchema>;

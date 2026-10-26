@@ -1,6 +1,12 @@
 "use client";
 
-export const ExpenseForm = () => {
+import { DraftExpenseType } from "@/schemas";
+
+type Props = {
+  expense?: DraftExpenseType;
+};
+
+export const ExpenseForm = ({ expense }: Props) => {
   return (
     <>
       <div className="mb-5">
@@ -13,6 +19,7 @@ export const ExpenseForm = () => {
           type="text"
           placeholder="Nombre del Gasto"
           name="name"
+          defaultValue={expense?.name}
         />
       </div>
 
@@ -26,6 +33,7 @@ export const ExpenseForm = () => {
           type="number"
           placeholder="Cantidad Gasto"
           name="amount"
+          defaultValue={expense?.amount}
         />
       </div>
     </>
