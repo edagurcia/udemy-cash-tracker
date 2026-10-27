@@ -1,9 +1,38 @@
 "use client";
 
-export const ProfileForm = () => {
+import { useActionState, useEffect } from "react";
+import { toast } from "react-toastify";
+import { UserType } from "@/schemas";
+import { updateProfile } from "@/actions/update-profile";
+import { ErrorMessage } from "../ui/ErrorMessage";
+import { logout } from "@/actions/logout";
+
+type Props = {
+  user: UserType;
+};
+
+export const ProfileForm = ({ user }: Props) => {
+  const [state, dispatch] = useActionState(updateProfile, {
+    errors: [],
+    success: "",
+  });
+
+  useEffect(() => {
+    if (state.success) {
+      toast.success(state.success, {
+        toastId: "budget-toast",
+      });
+
+      logout();
+    }
+  }, [state]);
+
   return (
     <>
-      <form className=" mt-14 space-y-5" noValidate>
+      <form action={dispatch} className=" mt-14 space-y-5" noValidate>
+        {state.errors.map((error, i) => (
+          <ErrorMessage key={i}>{error}</ErrorMessage>
+        ))}
         <div className="flex flex-col gap-5">
           <label className="font-bold text-2xl">Nombre</label>
           <input
@@ -11,6 +40,7 @@ export const ProfileForm = () => {
             placeholder="Tu Nombre"
             className="w-full border border-gray-300 p-3 rounded-lg"
             name="name"
+            defaultValue={user.name}
           />
         </div>
         <div className="flex flex-col gap-5">
@@ -22,6 +52,7 @@ export const ProfileForm = () => {
             placeholder="Tu Email"
             className="w-full border border-gray-300 p-3 rounded-lg"
             name="email"
+            defaultValue={user.email}
           />
         </div>
 
