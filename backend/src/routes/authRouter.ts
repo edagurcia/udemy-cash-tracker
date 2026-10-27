@@ -83,6 +83,15 @@ router.post(
 );
 
 router.post(
+  "/update-profile",
+  authenticated,
+  body("name").notEmpty().withMessage("El nombre del usuario es obligatorio"),
+  body("email").isEmail().withMessage("Correo no valido"),
+  handleInputErrors,
+  AuthController.updateProfile,
+);
+
+router.post(
   "/check-password",
   authenticated,
   body("password").notEmpty().withMessage("Contraseña es obligatoria"),

@@ -177,4 +177,36 @@ export class AuthController {
 
     res.json("Contraseña verificada correctamente");
   };
+
+  static updateProfile = async (req: Request, res: Response) => {
+    const { name, email } = req.body;
+    const { id } = req.user;
+
+    try {
+      const user = await User.findByPk(id);
+
+      if (!user) {
+        const error = new Error("Usuario no esta registrado");
+        return res.status(404).json({ error: error.message });
+      }
+
+      user.name = name;
+      user.email = email;
+      user.confirmed = false;
+      user.token = generateToken();
+
+      await user.save();
+
+      await AuthEmail.sendConfirmationEmail({
+        name: user.name,
+        email: user.email,
+        token: user.token,
+      });
+
+      res.status(201).json("Perfil actualizado");
+    } catch (error) {
+      // console.log(error)
+      res.status(500).json({ error: "Hubo un error" });
+    }
+  };
 }
