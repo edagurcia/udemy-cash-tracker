@@ -102,6 +102,21 @@ export const PasswordValidationSchema = z
   .string()
   .min(1, { message: "Contraseña es obligatoria" });
 
+export const UpdatePasswordSchema = z
+  .object({
+    current_password: z
+      .string()
+      .min(1, { message: "La contraseña actual es obligatoria" }),
+    password: z
+      .string()
+      .min(8, { message: "El Password debe ser de al menos 8 caracteres" }),
+    password_confirmation: z.string(),
+  })
+  .refine((data) => data.password === data.password_confirmation, {
+    message: "Los Passwords no son iguales",
+    path: ["password_confirmation"],
+  });
+
 export const SuccessSchema = z.string().min(1, { message: "Valor no valido" });
 
 export const ErrorResponseSchema = z.object({

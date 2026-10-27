@@ -5,6 +5,8 @@ import { AddExpenseButton } from "@/components/admin/expenses/AddExpenseButton";
 import ModalContainer from "@/components/ui/ModalContainer";
 import { formatCurrency, formatDateLong } from "@/utils";
 import { ExpenseMenu } from "@/components/admin/expenses/ExpenseMenu";
+import { Amount } from "@/components/ui/Amount";
+import { ProgressBar } from "@/components/ui/ProgressBar";
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -27,6 +29,19 @@ export default async function BudgetPage({
   const { id } = await params;
 
   const budget = await getBudget(id);
+  const budgetAmount = +budget.amount;
+
+  const totalSpend = budget.expenses.reduce(
+    (total, expense) => +expense.amount + total,
+    0,
+  );
+
+  const totalAvailable = +budget.amount - totalSpend;
+
+  const totalSpendPercentage =
+    budgetAmount > 0 ? +((totalSpend / budgetAmount) * 100).toFixed(1) : 0;
+
+  const isBudgetComplete = totalSpendPercentage >= 100;
 
   return (
     <>
@@ -38,7 +53,7 @@ export default async function BudgetPage({
           </p>
         </div>
 
-        <AddExpenseButton />
+        {!isBudgetComplete && <AddExpenseButton />}
 
         <Link
           href={"/admin"}
@@ -50,6 +65,16 @@ export default async function BudgetPage({
 
       {budget.expenses.length ? (
         <>
+          <div className="grid grid-cols-1 md:grid-cols-2 mt-10">
+            <ProgressBar totalSpendPercentage={totalSpendPercentage} />
+
+            <div className="flex flex-col justify-center items-center md:items-start gap-2">
+              <Amount label="Presupuesto" amount={+budget.amount} />
+              <Amount label="Disponible" amount={totalAvailable} />
+              <Amount label="Gastado" amount={totalSpend} />
+            </div>
+          </div>
+
           <h1 className="text-2xl font-bold text-purple-950 mt-10">
             Gastos registrados:
           </h1>
